@@ -10,9 +10,9 @@ if (!function_exists('active_link')) {
 }
 
 if (!function_exists('alert')) {
-    function alert(string $value)
+    function alert(string $value, string $type = 'success')
     {
-        session(['alert' => $value]);
+        session(['alert' => ['message' => $value, 'type' => $type]]);
     }
 }
 

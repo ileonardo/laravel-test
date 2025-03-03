@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Post;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -12,7 +15,30 @@ class PostController extends Controller
      */
     public function index()
     {
-        return 'ddfsdf';
+        $posts = (object)[
+            (object) [
+                'id' => 134,
+                'title' => 'Test title2',
+                'content' => 'Test body',
+            ],
+            (object) [
+                'id' => 134,
+                'title' => 'Test title',
+                'content' => 'Test body',
+            ],
+            (object) [
+                'id' => 134,
+                'title' => 'Test title',
+                'content' => 'Test body',
+            ],
+            (object) [
+                'id' => 134,
+                'title' => 'Test title',
+                'content' => 'Test body',
+            ],
+        ];
+
+        return view('user.posts.index', compact('posts'));
     }
 
     /**
@@ -20,7 +46,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.posts.create');
     }
 
     /**
@@ -28,7 +54,23 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = validator($request->all(), [
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+            'published' => ['nullable', 'boolean'],
+            'published_at' => ['nullable', 'date'],
+        ])->validate();
+
+
+        Post::create([
+            'user_id' => User::query()->value('id'),
+            'title' => $validatedData['title'],
+            'content' => $validatedData['content'],
+            'published' => $validatedData['published'] ?? false,
+            'published_at' => new Carbon($validatedData['published_at'] ?? null),
+        ]);
+
+        return redirect()->route('user.posts');
     }
 
     /**

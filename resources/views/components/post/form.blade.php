@@ -1,5 +1,7 @@
 @props(['post' => null])
 
+<x-errors />
+
 <x-form {{ $attributes }}>
     <x-form-item>
         <x-label required>{{ __('Post title') }}</x-label>
@@ -13,15 +15,15 @@
         <x-error name="content" />
     </x-form-item>
 
-{{--    <x-form-item>--}}
-{{--        <x-label required>{{ __('Дата публикации') }}</x-label>--}}
-{{--        <x-input name="published_at" value="{{ $post?->published_at?->format('d.m.Y') ?? '' }}" placeholder="dd.mm.yyyy" />--}}
-{{--        <x-error name="published_at" />--}}
-{{--    </x-form-item>--}}
+    <x-form-item>
+        <x-label required>{{ __('Publish date') }}</x-label>
+        <x-input name="published_at" value="{{ $post?->published_at?->format('d.m.Y') ?? '' }}" placeholder="dd.mm.yyyy" />
+        <x-error name="published_at" />
+    </x-form-item>
 
     <x-form-item>
         <x-checkbox name="published" :checked="$post?->published">
-            Опубликовано
+            Published
         </x-checkbox>
     </x-form-item>
 

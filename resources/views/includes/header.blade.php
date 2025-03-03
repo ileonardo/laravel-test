@@ -32,7 +32,7 @@
 
                 <li class="nav-item">
                     <a href="{{ route('login') }}" class="nav-link {{ active_link('login') }}" aria-current="page">
-                        {{ __('Submit') }}
+                        {{ __('Login') }}
                     </a>
                 </li>
             </ul>
